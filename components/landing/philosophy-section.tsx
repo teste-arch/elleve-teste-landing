@@ -13,22 +13,33 @@ export function PhilosophySection() {
   const [activeHeadlineIndex, setActiveHeadlineIndex] = useState(0);
 
   useEffect(() => {
+    let rafId: number | null = null;
+
     const handleScroll = () => {
       if (!containerRef.current) return;
       const rect = containerRef.current.getBoundingClientRect();
-      const progress = Math.min(
-        Math.max(-rect.top / (rect.height - window.innerHeight), 0),
-        1
-      );
+      const total = rect.height - window.innerHeight;
+      if (total <= 0) return;
+
+      const progress = Math.min(Math.max(-rect.top / total, 0), 1);
       const index = Math.min(
         Math.floor(progress * rotatingHeadlines.length),
         rotatingHeadlines.length - 1
       );
-      setActiveHeadlineIndex(index);
+
+      setActiveHeadlineIndex((prev) => (prev !== index ? index : prev));
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => {
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(handleScroll);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
   }, []);
 
   const statementText =
@@ -37,7 +48,7 @@ export function PhilosophySection() {
   const words = statementText.split(" ");
 
   return (
-    <section id="ecossistema" ref={containerRef} className="relative bg-black text-white">
+    <section id="ecossistema" ref={containerRef} className="relative bg-ink text-cream">
       {/* 3D Rotating Sticky Perspective Track */}
       <div className="relative h-[220vh]">
         <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden px-4">
@@ -51,7 +62,7 @@ export function PhilosophySection() {
                 return (
                   <h2
                     key={headline}
-                    className={`absolute inset-0 flex items-center justify-center text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-medium tracking-tighter transition-all duration-700 select-none ${
+                    className={`absolute inset-0 flex items-center justify-center font-display text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-medium tracking-tight text-cream transition-all duration-700 select-none ${
                       isActive
                         ? "opacity-100 scale-100"
                         : "opacity-0 scale-90 translate-y-12 pointer-events-none"
@@ -63,7 +74,7 @@ export function PhilosophySection() {
               })}
             </div>
 
-            <p className="text-xs uppercase tracking-[0.25em] text-neutral-500 mt-6 font-mono">
+            <p className="text-xs uppercase tracking-[0.25em] text-cream/50 mt-6 font-mono">
               O Ecossistema Completo Elleve
             </p>
           </div>
@@ -71,12 +82,12 @@ export function PhilosophySection() {
       </div>
 
       {/* Narrative Manifest with Editorial Spacing */}
-      <div className="px-6 py-28 md:px-12 md:py-36 lg:px-20 max-w-5xl mx-auto text-center border-t border-white/10">
-        <h3 className="text-2xl sm:text-3xl md:text-4xl font-normal text-neutral-300 tracking-tight leading-relaxed">
+      <div className="px-6 py-28 md:px-12 md:py-36 lg:px-20 max-w-5xl mx-auto text-center border-t border-cream/10">
+        <h3 className="font-sans text-2xl sm:text-3xl md:text-4xl font-light text-cream/90 tracking-tight leading-relaxed">
           {words.map((word, i) => (
             <span
               key={i}
-              className="inline-block transition-all duration-300 mr-2 text-white hover:text-neutral-400"
+              className="inline-block transition-all duration-300 mr-2 text-cream hover:text-white"
             >
               {word}
             </span>
