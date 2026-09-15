@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-space-grotesk), ui-monospace, monospace;
+
+  /* Elleve Official Design Tokens (scraped from elleve.ventoflow.top) */
+  --color-ink: #101010;
+  --color-cream: #EEE1CC;
+  --color-mid: #6D6E70;
+  --color-stone: #958E81;
+  --color-green: #3C5A4F;
+  --color-moss-deep: #2A3F37;
+  --color-red: #F51C25;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+}
+
+:root {
+  --background: #101010;
+  --foreground: #EEE1CC;
+  --muted: #1A1B1A;
+  --muted-foreground: #958E81;
+  --border: rgba(238, 225, 204, 0.12);
+  --card: #151515;
+  --card-foreground: #EEE1CC;
+  --primary: #EEE1CC;
+  --primary-foreground: #101010;
+  --secondary: #1A1B1A;
+  --secondary-foreground: #EEE1CC;
+  --accent: #3C5A4F;
+  --accent-foreground: #EEE1CC;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Headings automatically use Outfit font-display */
+h1, h2, h3, h4, h5, h6, .font-display {
+  font-family: var(--font-display);
+}
+
+/* Monospace & technical accents use Space Grotesk */
+code, pre, .font-mono {
+  font-family: var(--font-mono);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
